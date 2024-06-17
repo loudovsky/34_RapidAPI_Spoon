@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "animate.css": "^4.1.1",
+    "aos": "^2.3.4",
+    "cors": "^2.8.5",
+    "swiper": "^11.1.4"
+  }
+}
