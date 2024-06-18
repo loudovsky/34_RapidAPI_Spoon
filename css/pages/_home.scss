@@ -1,5 +1,6 @@
 html {
   scroll-behavior: smooth;
+  font-family: "Itim", cursive;
 }
 
 body {
@@ -12,12 +13,39 @@ header {
   top: 0;
   width: 100%;
   background-color: #546a2a;
-  height: 100px;
-  display: flex;
-  justify-content: center;
+  display: block;
   align-items: center;
-  img {
-    height: 100%;
+  .header-wrapper {
+    width: 1000px;
+    margin: 0 auto;
+  }
+  .first-stage {
+    display: inline-block;
+    text-align: center;
+  }
+  .first-stage img {
+    height: 100px;
+  }
+
+  .second-stage {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 30px;
+    margin-bottom: 20px;
+
+    .single-ingredient {
+      font-family: inherit;
+      background-color: #f7ea6e;
+      color: #000;
+      margin: 0 10px;
+      padding: 5px;
+      border-radius: 5px;
+      i {
+        color: #546a2a;
+      }
+    }
   }
 }
 
@@ -25,12 +53,11 @@ header {
   --animate-delay: 2s;
 }
 .container {
-  background-color: #f3ebeb;
   width: 80vw;
-  margin: 120px auto;
-  border-radius: 10px;
-  padding: 50px 0;
-  box-shadow: -47px 18px 64px -26px rgba(0, 0, 0, 0.43);
+  margin: 50px auto;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 30px;
 }
 
 h1 {
@@ -39,15 +66,9 @@ h1 {
   color: #000;
   font-size: 50px;
   font-weight: normal;
-  margin-top: 0;
+  margin: 120px 0 0 0;
 }
-.banana {
-  margin-top: 50px;
-  text-align: center;
-  img {
-    width: 100px;
-  }
-}
+
 form {
   display: flex;
   justify-content: center;
@@ -74,7 +95,7 @@ form {
     position: relative;
   }
 
-  i {
+  .search_bar > i {
     position: absolute;
     z-index: 1;
     left: 20px;
@@ -106,21 +127,77 @@ form {
       background: #00000000;
     }
   }
+
   select {
     border-radius: 5px;
     margin-left: 10px;
   }
 }
+.saved,
 .wrapper {
+  min-height: 50vh;
   font-family: "Itim", cursive;
-  max-width: 1000px;
-  margin: 100px auto;
+  width: 100%;
   color: #000;
-  display: flex;
-  flex-direction: column;
-
+  display: block;
+  border-radius: 20px;
+  padding: 20px 50px 50px 50px;
+  box-shadow: -6px 8px 27px 4px rgba(0, 0, 0, 0.43);
+  -webkit-box-shadow: -6px 8px 27px 4px rgba(0, 0, 0, 0.43);
+  -moz-box-shadow: -6px 8px 27px 4px rgba(0, 0, 0, 0.43);
+  background-color: #f3ebeb;
+  h2 {
+    margin-top: 0;
+  }
+}
+.wrapper {
   h3 {
     cursor: pointer;
+  }
+  .image {
+    width: 500px;
+    height: 500px;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      @include transition;
+    }
+
+    &:hover {
+      img {
+        width: 102%;
+        height: 102%;
+        @include transition;
+      }
+    }
+    .heart {
+      position: absolute;
+      bottom: 5%;
+      right: 5%;
+      border-radius: 15px;
+      z-index: 2;
+      background-color: #fff;
+      @include transition;
+      &:hover {
+        background-color: rgb(59, 148, 250);
+        @include transition;
+        i {
+          color: #fff;
+        }
+      }
+      i {
+        font-size: 20px;
+        padding: 5px;
+        color: grey;
+      }
+    }
   }
 
   .image-ingredients {
@@ -155,25 +232,6 @@ form {
     }
   }
 
-  .image {
-    width: 300px;
-    height: 300px;
-    overflow: hidden;
-    cursor: pointer;
-    img {
-      width: 300px;
-      height: 300px;
-      object-fit: cover;
-      object-position: center;
-      @include transition;
-      &:hover {
-        width: 310px;
-        height: 310px;
-        @include transition;
-      }
-    }
-  }
-
   ul {
     margin-top: 0;
     padding-left: 20px;
@@ -185,6 +243,7 @@ form {
   .nutrition-facts {
     display: flex;
     justify-content: flex-start;
+    flex-direction: column;
     gap: 10px;
     span {
       font-weight: 600;
@@ -228,4 +287,64 @@ footer {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* CSS */
+
+/* CSS */
+#button {
+  align-items: center;
+  background-image: linear-gradient(135deg, #f34079 40%, #fc894d);
+  border: 0;
+  border-radius: 10px;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  font-family: "Codec cold", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  height: 45px;
+  justify-content: center;
+  letter-spacing: 0.4px;
+  line-height: 1;
+  max-width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 3px;
+  text-decoration: none;
+  text-transform: uppercase;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin-left: 10px;
+}
+
+#button:active {
+  outline: 0;
+}
+
+#button:hover {
+  outline: 0;
+}
+
+#button span {
+  transition: all 200ms;
+}
+
+#button:hover span {
+  transform: scale(0.9);
+  opacity: 0.75;
+}
+
+@media screen and (max-width: 991px) {
+  #button {
+    font-size: 15px;
+    height: 50px;
+  }
+
+  #button span {
+    line-height: 50px;
+  }
 }

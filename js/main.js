@@ -1,21 +1,58 @@
 const query = document.querySelector("#gifToSearch");
 const nbr = document.querySelector("select");
-const wrapper = document.querySelector(".wrapper");
+const wrapper = document.querySelector(".recipe_result");
 const button = document.querySelector("#button");
+const add = document.querySelector("#add_ingredient");
+const second_stage = document.querySelector(".second-stage");
 
 let xValues = ["protein", "fat", "carbohydrates"];
 let yValues = [20, 30, 50];
 let barColors = ["orange", "green", "blue"];
 
-let id_s = [];
+let ingredients = [];
+
+// Pour épingler les ingrédients choisis dans la barre de recherche
+function printSingleIngredient(tab) {
+  second_stage.innerHTML = "";
+
+  tab.forEach((tabElement, index) => {
+    second_stage.innerHTML += `
+  <div class="single-ingredient" data-index="${index}"><i class="fa-regular fa-circle-xmark delete" style="cursor:pointer"></i> ${tabElement}</div>
+  `;
+  });
+}
+
+// Pour assembler les ingrédients et les retourner sous forme d'une chaîne de caractère adaptée au fetch
+function assembleIngredients(ingredients) {
+  // Si le tableau est vide, retournez une chaîne vide
+  if (ingredients.length === 0) {
+    return (parsedIngredients = "");
+  } else if (ingredients.length === 1) {
+    // Si un seul ingrédient, retournez l'ingrédient entre guillemets
+    parsedIngredients = `"${ingredients[0]}"`;
+    return parsedIngredients;
+  } else {
+    // Sinon, assemblez les ingrédients avec des virgules et des espaces,
+    // puis remplacez les virgules par des "+"
+    parsedIngredients = ingredients.join(",+");
+    return parsedIngredients;
+  }
+}
+
+function deleteIngredient(lineToKill) {
+  ingredients.splice(lineToKill, 1);
+  printSingleIngredient(ingredients);
+}
 
 async function generate() {
   // Mettre le wrapper à vide
   wrapper.innerHTML = "";
   window.scrollTo(0, 0);
-  id_s = [];
 
-  const url = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch?query=${query.value}&addRecipeInstructions=true&instructionsRequired=true&number=${nbr.value}`;
+  parsedIngredients = assembleIngredients(ingredients);
+  console.log(parsedIngredients);
+
+  const url = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?ingredients=${parsedIngredients}&addRecipeInstructions=true&instructionsRequired=true&number=${nbr.value}`;
   const options = {
     method: "GET",
     headers: {
@@ -32,13 +69,13 @@ async function generate() {
       id_s.push(oneResult.id);
     });
     console.log(id_s);*/
-    data.results.forEach(function (oneResult) {
+    data.forEach(function (oneResult) {
       console.log(oneResult.id);
       // On s'assure que la 1ère lettre de chaque titre soit en majuscule
       const recipeTitle =
         oneResult.title.charAt(0).toUpperCase() + oneResult.title.slice(1);
       console.log(recipeTitle);
-      wrapper.innerHTML += `<h3 data-aos="fade-left" class="title" id=${oneResult.id}>${recipeTitle}</h3><div class='image' data-aos="fade-up-left"><img src="${oneResult.image}" class="title" onerror="this.src='../img/pexels-karolina-grabowska-4033639.jpg'" alt="photo recette" id=${oneResult.id}></div>`;
+      wrapper.innerHTML += `<h3 data-aos="fade-left" class="title" id=${oneResult.id}>${recipeTitle}</h3><div class='image' data-aos="fade-up-left"><img src="${oneResult.image}" class="title" onerror="this.src='../img/pexels-karolina-grabowska-4033639.jpg'" alt="photo recette" id=${oneResult.id} /><div class="heart"><i class="fa-regular fa-heart"></i></div></div>`;
     });
     /*const url = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${oneResult.id}/information?includeNutrition=true`;
       const options = {
@@ -68,7 +105,7 @@ query.addEventListener("keypress", function (event) {
     // Cancel the default action, if needed
     event.preventDefault();
     // Trigger the button element with a click
-    document.getElementById("button").click();
+    document.getElementById("add_ingredient").click();
   }
 });
 
@@ -83,6 +120,16 @@ wrapper.addEventListener("click", function (event) {
 
 button.addEventListener("click", function () {
   generate();
+});
+
+add.addEventListener("click", function () {
+  if (query.value !== "") {
+    let newIngredient = query.value;
+    ingredients.push(newIngredient);
+    console.log(ingredients);
+  }
+  printSingleIngredient(ingredients);
+  query.value = "";
 });
 
 wrapper.addEventListener("click", async function (e) {
@@ -149,7 +196,9 @@ wrapper.addEventListener("click", async function (e) {
       instructionsList.className = "instructions";
       instruction.appendChild(instructionsList);
 
-      if (data.analyzedInstructions[0].steps.length !== 1) {
+      if (typeof data.analyzedInstructions[0] === "undefined") {
+        instructionsList.innerHTML = `<p><b>Get on with it!</b> The author of this recipe has not given any instructions...</p>`;
+      } else if (data.analyzedInstructions[0].steps.length !== 1) {
         // En considérant que les instructions sont stockés dans un tableau d'objets dans la section 'analyzedInstructions'
         data.analyzedInstructions[0].steps.forEach(function (oneInstruction) {
           const instructionSingleElement = document.createElement("li");
@@ -209,6 +258,15 @@ wrapper.addEventListener("click", async function (e) {
     } catch (error) {
       console.error(error);
     }
+  }
+});
+
+second_stage.addEventListener("click", function (e) {
+  if (e.target.classList.contains("delete")) {
+    let positionInTab = parseInt(
+      e.target.parentElement.getAttribute("data-index")
+    );
+    deleteIngredient(positionInTab);
   }
 });
 

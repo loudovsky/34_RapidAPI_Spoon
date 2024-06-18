@@ -18,42 +18,51 @@
   </head>
   <body>
     <header>
-      <img src="./img/what-2-cook_logo.png" alt="" />
-      <form action="">
-        <div class="search_bar">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <input type="button" id="button" />
-          <input
-            type="text"
-            placeholder="Insert ingredient (tomato, camembert,...)"
-            id="gifToSearch"
-          />
+      <section class="header-wrapper">
+        <div class="first-stage">
+          <form action="">
+            <img src="./img/what-2-cook_logo.png" alt="" />
+            <div class="search_bar">
+              <i class="fa-solid fa-plus"></i>
+              <input type="button" id="add_ingredient" />
+              <input
+                type="text"
+                placeholder="Insert ingredient (tomato, camembert,...)"
+                id="gifToSearch"
+              />
+            </div>
+            <div class="search_button">
+              <button id="button">Search recipe(s)</button>
+            </div>
+            <div class="counter">
+              <select name="" id="">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+              <p>recipe(s)</p>
+            </div>
+          </form>
         </div>
-        <div class="counter">
-          <select name="" id="">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-          </select>
-          <p>recipe(s)</p>
-        </div>
-        <nav>
-          <a href="#contact">Contact</a>
-          <a href="#about">About</a>
-        </nav>
-      </form>
+        <div class="second-stage"></div>
+      </section>
     </header>
+    <h1>The Recipes Machine</h1>
     <section class="container">
-      <h1>The Recipes Machine</h1>
-      <div class="wrapper"></div>
-      <canvas id="myChart" style="width: 100%; max-width: 700px"></canvas>
+      <div class="wrapper">
+        <h2>Result</h2>
+        <div class="recipe_result"></div>
+      </div>
+      <div class="saved">
+        <h2>Saved Recipes</h2>
+      </div>
     </section>
     <footer>
       <section class="top">
