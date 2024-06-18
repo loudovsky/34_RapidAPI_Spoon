@@ -75,7 +75,7 @@ async function generate() {
       const recipeTitle =
         oneResult.title.charAt(0).toUpperCase() + oneResult.title.slice(1);
       console.log(recipeTitle);
-      wrapper.innerHTML += `<h3 data-aos="fade-left" class="title" id=${oneResult.id}>${recipeTitle}</h3><div class='image' data-aos="fade-up-left"><img src="${oneResult.image}" class="title" onerror="this.src='../img/pexels-karolina-grabowska-4033639.jpg'" alt="photo recette" id=${oneResult.id} /><div class="heart"><i class="fa-regular fa-heart"></i></div></div>`;
+      wrapper.innerHTML += `<div class='image title' id=${oneResult.id} data-aos="fade-up-left" style="background: url(${oneResult.image}) center/cover"><h3 data-aos="fade-left" class="title" id=${oneResult.id}>${recipeTitle}</h3><div class="heart"><i class="fa-regular fa-heart"></i></div></div>`;
     });
     /*const url = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${oneResult.id}/information?includeNutrition=true`;
       const options = {
@@ -152,7 +152,7 @@ wrapper.addEventListener("click", async function (e) {
       const data = JSON.parse(result);
       console.log(data);
 
-      wrapper.innerHTML += `<div class="previous" style="cursor:pointer">< Previous</div><h3><a href="${data.sourceUrl}" target="_blank" data-aos="fade-left">${data.title}</a></h3>`;
+      wrapper.innerHTML += `<div class="previous" style="cursor:pointer">< Previous</div><h4><a href="${data.sourceUrl}" target="_blank" data-aos="fade-left">${data.title}</a></h4>`;
       // Ajoute une classe parente qui contiendra la div image et la div recipe
       const parentDiv = document.createElement("div");
       parentDiv.className = "image-ingredients";
