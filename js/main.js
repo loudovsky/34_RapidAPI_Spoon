@@ -1,3 +1,5 @@
+// =============== My var ==================
+
 const query = document.querySelector("#gifToSearch");
 const nbr = document.querySelector("select");
 const wrapper = document.querySelector(".recipe_result");
@@ -9,7 +11,11 @@ let xValues = ["protein", "fat", "carbohydrates"];
 let yValues = [20, 30, 50];
 let barColors = ["orange", "green", "blue"];
 
+// =============== My tabs ==================
+
 let ingredients = [];
+
+//============== Functions =================
 
 // Pour épingler les ingrédients choisis dans la barre de recherche
 function printSingleIngredient(tab) {
@@ -47,12 +53,11 @@ function deleteIngredient(lineToKill) {
 async function generate() {
   // Mettre le wrapper à vide
   wrapper.innerHTML = "";
-  window.scrollTo(0, 0);
 
   parsedIngredients = assembleIngredients(ingredients);
   console.log(parsedIngredients);
 
-  const url = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients?ingredients=${parsedIngredients}&addRecipeInstructions=true&instructionsRequired=true&number=${nbr.value}`;
+  const url = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch?includeIngredients=${parsedIngredients}&addRecipeInstructions=true&instructionsRequired=true&number=${nbr.value}`;
   const options = {
     method: "GET",
     headers: {
@@ -69,13 +74,13 @@ async function generate() {
       id_s.push(oneResult.id);
     });
     console.log(id_s);*/
-    data.forEach(function (oneResult) {
+    data.results.forEach(function (oneResult) {
       console.log(oneResult.id);
       // On s'assure que la 1ère lettre de chaque titre soit en majuscule
       const recipeTitle =
         oneResult.title.charAt(0).toUpperCase() + oneResult.title.slice(1);
       console.log(recipeTitle);
-      wrapper.innerHTML += `<div class='image title' id=${oneResult.id} data-aos="fade-up-left" style="background: url(${oneResult.image}) center/cover"><h3 data-aos="fade-left" class="title" id=${oneResult.id}>${recipeTitle}</h3><div class="heart"><i class="fa-regular fa-heart"></i></div></div>`;
+      wrapper.innerHTML += `<div class='image title' id=${oneResult.id} data-aos="fade-up-left" style="background: url(${oneResult.image}) center/cover" onerror="this.style.backgroundImage = 'url(../img/pexels-karolina-grabowska-4033639.jpg)'"><h3 data-aos="fade-left" class="title" id=${oneResult.id}>${recipeTitle}</h3><div class="heart"><i class="fa-regular fa-heart"></i></div></div>`;
     });
     /*const url = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${oneResult.id}/information?includeNutrition=true`;
       const options = {
@@ -100,6 +105,8 @@ async function generate() {
   }
 }
 
+//=============================== EVENTS============================
+
 query.addEventListener("keypress", function (event) {
   if (event.key === "Enter") {
     // Cancel the default action, if needed
@@ -120,6 +127,7 @@ wrapper.addEventListener("click", function (event) {
 
 button.addEventListener("click", function () {
   generate();
+  window.scrollTo(0, 0);
 });
 
 add.addEventListener("click", function () {
