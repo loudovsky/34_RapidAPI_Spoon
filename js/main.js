@@ -6,6 +6,7 @@ const wrapper = document.querySelector(".recipe_result");
 const button = document.querySelector("#button");
 const add = document.querySelector("#add_ingredient");
 const second_stage = document.querySelector(".second-stage");
+const saved_recipes = document.querySelector(".saved_recipes");
 
 let xValues = ["protein", "fat", "carbohydrates"];
 let yValues = [20, 30, 50];
@@ -14,6 +15,7 @@ let barColors = ["orange", "green", "blue"];
 // =============== My tabs ==================
 
 let ingredients = [];
+let savedRecipes = [];
 
 //============== Functions =================
 
@@ -48,6 +50,24 @@ function assembleIngredients(ingredients) {
 function deleteIngredient(lineToKill) {
   ingredients.splice(lineToKill, 1);
   printSingleIngredient(ingredients);
+}
+
+function printSavedRecipes(tab) {
+  saved_recipes.innerHTML = "";
+
+  if (tab.length !== 0) {
+    tab.forEach((oneRecipe, index) => {
+      console.log(oneRecipe);
+      saved_recipes.innerHTML += `<div class='image title' id=${oneRecipe.id} style="background: url(${oneRecipe.image}) center/cover" onerror="this.style.backgroundImage = 'url(../img/pexels-karolina-grabowska-4033639.jpg)'"><h3 class="title" id=${oneRecipe.id}>${oneRecipe.title}</h3><div class="erase_div"><i class="fa-regular fa-circle-xmark erase" data-index='${index}'></i></div></div>`;
+    });
+  } else {
+    savedRecipes.innerHTML = `<p>no recipe saved</p>`;
+  }
+}
+
+function deleteSavedRecipe(lineToKill, tab) {
+  tab.splice(lineToKill, 1);
+  printSavedRecipes(tab);
 }
 
 async function generate() {
@@ -146,7 +166,14 @@ add.addEventListener("click", function () {
   query.value = "";
 });
 
-wrapper.addEventListener("click", async function (e) {
+saved_recipes.addEventListener("click", function (e) {
+  if (e.target.classList.contains("erase")) {
+    let placeInTab = parseInt(e.target.getAttribute("data-index"));
+    deleteSavedRecipe(placeInTab, savedRecipes);
+  }
+});
+
+document.addEventListener("click", async function (e) {
   if (e.target.classList.contains("title")) {
     wrapper.innerHTML = "";
     window.scrollTo(0, 0);
@@ -306,6 +333,31 @@ wrapper.addEventListener("click", async function (e) {
     } catch (error) {
       console.error(error);
     }
+  }
+});
+
+wrapper.addEventListener("click", (e) => {
+  if (e.target.classList.contains("fa-heart")) {
+    const imageDiv = e.target.parentElement.parentElement;
+
+    const divId = imageDiv.id;
+    console.log("ID de la div :", divId);
+
+    const backgroundImageUrl =
+      window.getComputedStyle(imageDiv).backgroundImage;
+    const cleanedImageUrl = backgroundImageUrl.slice(5, -2);
+    console.log("URL de l'image de fond :", cleanedImageUrl);
+
+    const h3Content = imageDiv.querySelector("h3").textContent;
+    console.log("Contenu de la balise <h3> :", h3Content);
+
+    savedRecipes.push({
+      image: cleanedImageUrl,
+      title: h3Content,
+      id: divId,
+    });
+    console.log(savedRecipes);
+    printSavedRecipes(savedRecipes);
   }
 });
 
