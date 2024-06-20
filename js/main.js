@@ -56,7 +56,7 @@ async function generate() {
   let number;
   if (ingredients === "") {
     parsedIngredients = "tomato";
-    number = 5;
+    number = 1;
   } else {
     parsedIngredients = assembleIngredients(ingredients);
     console.log(parsedIngredients);
