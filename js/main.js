@@ -166,12 +166,10 @@ wrapper.addEventListener("click", async function (e) {
       const data = JSON.parse(result);
       console.log(data);
 
-      wrapper.innerHTML += `<div class="previous" style="cursor:pointer">< Back</div><h4><a href="${data.sourceUrl}" target="_blank" data-aos="fade-left">${data.title}</a></h4>`;
+      wrapper.innerHTML += `<div class="previous" style="cursor:pointer">< Back</div><h4><a href="${data.sourceUrl}">${data.title}</a></h4>`;
       // Ajoute une classe parente qui contiendra la div image et la div recipe
       const parentDiv = document.createElement("div");
       parentDiv.className = "image-ingredients";
-      parentDiv.setAttribute("data-aos", "fade-up");
-      parentDiv.setAttribute("data-aos-anchor-placement", "top-bottom");
 
       // Crée la div pour l'image / onerror= permet le lien vers l'image ne fonctionne pas, d'afficher une image par défaut
       const imageDiv = document.createElement("div");
@@ -186,6 +184,11 @@ wrapper.addEventListener("click", async function (e) {
       const labelDiv = document.createElement("div");
       labelDiv.className = "label-div";
       ingredientsDiv.appendChild(labelDiv);
+
+      // Crée titre
+      const ingredientTitle = document.createElement("h4");
+      ingredientTitle.textContent = "Ingredients";
+      ingredientsDiv.appendChild(ingredientTitle);
 
       // Pour afficher les étiquettes "gluten free", "dairy free"
       if (data.diets.includes("gluten free")) {

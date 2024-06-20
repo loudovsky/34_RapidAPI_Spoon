@@ -173,8 +173,8 @@ form {
     border-radius: 15px;
   }
   .single-image {
-    width: 300px;
-    height: 300px;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
     img {
       width: 100%;
@@ -228,9 +228,8 @@ form {
 
   .image-ingredients {
     display: grid;
-    grid-template-columns: 1fr 3fr;
-    gap: 30px;
-
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    width: 100%;
     .label-div {
       margin-bottom: 10px;
     }
@@ -298,6 +297,9 @@ form {
     .vegan {
       background-color: #0fe113;
     }
+    h4 {
+      margin-bottom: 0;
+    }
   }
 
   .ingredients-instruction {
@@ -328,16 +330,21 @@ form {
 
   ul {
     margin-top: 0;
-    padding-left: 20px;
+    padding-left: 30px;
   }
   a {
     text-decoration: none;
     color: #000;
+    @include transition;
+    &:hover {
+      color: #4d9aaf;
+      @include transition;
+    }
   }
   .nutrition-facts {
     display: flex;
     justify-content: flex-start;
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 10px;
     span {
       font-weight: 600;
