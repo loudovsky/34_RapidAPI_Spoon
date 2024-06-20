@@ -172,6 +172,17 @@ form {
     padding: 8px 10px;
     border-radius: 15px;
   }
+  .single-image {
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
   .image {
     display: flex;
     flex-direction: column;
@@ -184,29 +195,15 @@ form {
     cursor: pointer;
     position: relative;
     padding: 10px 20px;
+    transition: 0.3s ease-in-out;
 
-    /*img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      @include transition;
-    }
-
-    &:hover {
-      img {
-        width: 102%;
-        height: 102%;
-        @include transition;
-      }
-    }*/
     .heart {
       position: absolute;
       bottom: 5%;
       right: 5%;
       border-radius: 15px;
       z-index: 2;
-      background-color: #fff;
+      background-color: #0000007e;
       @include transition;
       &:hover {
         background-color: rgb(59, 148, 250);
@@ -218,15 +215,89 @@ form {
       i {
         font-size: 20px;
         padding: 5px;
-        color: grey;
+        color: #fff;
       }
     }
+  }
+
+  .image:hover {
+    width: 505px;
+    height: 505px;
+    transition: 0.3s ease-in-out;
   }
 
   .image-ingredients {
     display: grid;
     grid-template-columns: 1fr 3fr;
     gap: 30px;
+
+    .label-div {
+      margin-bottom: 10px;
+    }
+
+    .label {
+      cursor: default;
+      color: #fff;
+      display: inline-block;
+      height: 24px;
+      line-height: 24px;
+      position: relative;
+      margin: 0 16px 8px 0;
+      padding: 0 10px 0 12px;
+      -webkit-border-bottom-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+      -webkit-border-top-right-radius: 3px;
+      border-top-right-radius: 3px;
+      -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      font-weight: bold;
+    }
+    .gluten:before,
+    .dairy:before,
+    .vegan:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -12px;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 12px 12px 12px 0;
+    }
+    .gluten:before {
+      border-color: transparent #fc894d transparent transparent;
+    }
+    .dairy:before {
+      border-color: transparent #7acce7 transparent transparent;
+    }
+    .vegan:before {
+      border-color: transparent #0fe113 transparent transparent;
+    }
+
+    .label:after {
+      content: "";
+      position: absolute;
+      top: 10px;
+      left: 1px;
+      float: left;
+      width: 5px;
+      height: 5px;
+      -webkit-border-radius: 50%;
+      border-radius: 50%;
+      background: #fff;
+      -webkit-box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.4);
+      box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.4);
+    }
+    .gluten {
+      background-color: #fc894d;
+    }
+    .dairy {
+      background-color: #7acce7;
+    }
+    .vegan {
+      background-color: #0fe113;
+    }
   }
 
   .ingredients-instruction {

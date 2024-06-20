@@ -53,11 +53,17 @@ function deleteIngredient(lineToKill) {
 async function generate() {
   // Mettre le wrapper à vide
   wrapper.innerHTML = "";
+  let number;
+  if (ingredients === "") {
+    parsedIngredients = "tomato";
+    number = 5;
+  } else {
+    parsedIngredients = assembleIngredients(ingredients);
+    console.log(parsedIngredients);
+    number = nbr.value;
+  }
 
-  parsedIngredients = assembleIngredients(ingredients);
-  console.log(parsedIngredients);
-
-  const url = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch?includeIngredients=${parsedIngredients}&addRecipeInstructions=true&instructionsRequired=true&number=${nbr.value}`;
+  const url = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch?includeIngredients=${parsedIngredients}&addRecipeInstructions=true&instructionsRequired=true&number=${number}`;
   const options = {
     method: "GET",
     headers: {
@@ -160,7 +166,7 @@ wrapper.addEventListener("click", async function (e) {
       const data = JSON.parse(result);
       console.log(data);
 
-      wrapper.innerHTML += `<div class="previous" style="cursor:pointer">< Previous</div><h4><a href="${data.sourceUrl}" target="_blank" data-aos="fade-left">${data.title}</a></h4>`;
+      wrapper.innerHTML += `<div class="previous" style="cursor:pointer">< Back</div><h4><a href="${data.sourceUrl}" target="_blank" data-aos="fade-left">${data.title}</a></h4>`;
       // Ajoute une classe parente qui contiendra la div image et la div recipe
       const parentDiv = document.createElement("div");
       parentDiv.className = "image-ingredients";
@@ -169,12 +175,43 @@ wrapper.addEventListener("click", async function (e) {
 
       // Crée la div pour l'image / onerror= permet le lien vers l'image ne fonctionne pas, d'afficher une image par défaut
       const imageDiv = document.createElement("div");
-      imageDiv.className = "image";
+      imageDiv.className = "single-image";
       imageDiv.innerHTML = `<img src="${data.image}" onerror="this.src='../img/pexels-karolina-grabowska-4033639.jpg'" alt="photo recette">`;
 
       // Crée une div pour les ingrédients
       const ingredientsDiv = document.createElement("ul");
       ingredientsDiv.className = "ingredients";
+
+      // Crée une sous-div pour les labels
+      const labelDiv = document.createElement("div");
+      labelDiv.className = "label-div";
+      ingredientsDiv.appendChild(labelDiv);
+
+      // Pour afficher les étiquettes "gluten free", "dairy free"
+      if (data.diets.includes("gluten free")) {
+        // Créez un élément d'étiquette (par exemple, une balise <span>) pour "gluten free"
+        const glutenFreeLabel = document.createElement("span");
+        glutenFreeLabel.className = "label gluten";
+        glutenFreeLabel.textContent = "gluten free";
+        // Ajoutez cet élément au DOM (par exemple, à un conteneur avec un ID spécifique)
+        labelDiv.appendChild(glutenFreeLabel);
+      }
+      if (data.diets.includes("dairy free")) {
+        // Créez un élément d'étiquette (par exemple, une balise <span>) pour "gluten free"
+        const dairyFreeLabel = document.createElement("span");
+        dairyFreeLabel.className = "label dairy";
+        dairyFreeLabel.textContent = "dairy free";
+        // Ajoutez cet élément au DOM (par exemple, à un conteneur avec un ID spécifique)
+        labelDiv.appendChild(dairyFreeLabel);
+      }
+      if (data.diets.includes("vegan")) {
+        // Créez un élément d'étiquette (par exemple, une balise <span>) pour "gluten free"
+        const veganLabel = document.createElement("span");
+        veganLabel.className = "label vegan";
+        veganLabel.textContent = "vegan";
+        // Ajoutez cet élément au DOM (par exemple, à un conteneur avec un ID spécifique)
+        labelDiv.appendChild(veganLabel);
+      }
 
       // En considérant que les ingrédients sont stockés dans un tableau d'objets dans la section 'extendedIngredients'
       data.extendedIngredients.forEach(function (oneIngredient) {
@@ -256,13 +293,13 @@ wrapper.addEventListener("click", async function (e) {
       ingredientsInstructionsDiv.className = "ingredients-instruction";
 
       ingredientsInstructionsDiv.appendChild(ingredientsDiv);
-      ingredientsInstructionsDiv.appendChild(instruction);
-      ingredientsInstructionsDiv.appendChild(nutritionFacts);
 
       parentDiv.appendChild(ingredientsInstructionsDiv);
 
       // Ajoute la div parente au conteneur principal (wrapper)
       wrapper.appendChild(parentDiv);
+      wrapper.appendChild(instruction);
+      wrapper.appendChild(nutritionFacts);
     } catch (error) {
       console.error(error);
     }
