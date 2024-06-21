@@ -7,6 +7,7 @@ const button = document.querySelector("#button");
 const add = document.querySelector("#add_ingredient");
 const second_stage = document.querySelector(".second-stage");
 const saved_recipes = document.querySelector(".saved_recipes");
+const single_image = document.querySelector(".single-image");
 
 let xValues = ["protein", "fat", "carbohydrates"];
 let yValues = [20, 30, 50];
@@ -106,7 +107,7 @@ async function generate() {
       const recipeTitle =
         oneResult.title.charAt(0).toUpperCase() + oneResult.title.slice(1);
       console.log(recipeTitle);
-      wrapper.innerHTML += `<div class='image title' id=${oneResult.id} data-aos="fade-up-left" style="background: url(${oneResult.image}) center/cover" onerror="this.style.backgroundImage = 'url(../img/pexels-karolina-grabowska-4033639.jpg)'"><h3 data-aos="fade-left" class="title" id=${oneResult.id}>${recipeTitle}</h3><div class="heart"><i class="fa-regular fa-heart"></i></div></div>`;
+      wrapper.innerHTML += `<div class='image title' id=${oneResult.id} data-aos="fade-up-left" style="background: url(${oneResult.image}) center/cover" onerror="this.style.backgroundImage = 'url(../img/pexels-karolina-grabowska-4033639.jpg)'"><h3 data-aos="fade-left" class="title" id=${oneResult.id}>${recipeTitle}</h3><div class="heart"><i class="fa-regular fa-heart" id="multi"></i></div></div>`;
     });
     /*const url = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${oneResult.id}/information?includeNutrition=true`;
       const options = {
@@ -201,7 +202,8 @@ document.addEventListener("click", async function (e) {
       // Crée la div pour l'image / onerror= permet le lien vers l'image ne fonctionne pas, d'afficher une image par défaut
       const imageDiv = document.createElement("div");
       imageDiv.className = "single-image";
-      imageDiv.innerHTML = `<img src="${data.image}" onerror="this.src='../img/pexels-karolina-grabowska-4033639.jpg'" alt="photo recette">`;
+      imageDiv.id = data.id;
+      imageDiv.innerHTML = `<img src="${data.image}" onerror="this.src='../img/pexels-karolina-grabowska-4033639.jpg'" alt="photo recette"><div class="heart" style="cursor:pointer"><i class="fa-regular fa-heart" id="single"></i></div>`;
 
       // Crée une div pour les ingrédients
       const ingredientsDiv = document.createElement("ul");
@@ -336,8 +338,34 @@ document.addEventListener("click", async function (e) {
   }
 });
 
+/*single_image.addEventListener.addEventListener("click", (e) => {
+  if (e.target.id ==="single") {
+    window.scrollTo(0, 0);
+
+    const img = e.target.parentElement.querySelector("img");
+
+    const imgId = img.id;
+
+    const backgroundImageUrl = window.getComputedStyle(img).backgroundImage;
+    const cleanedImageUrl = backgroundImageUrl.slice(5, -2);
+    console.log("URL de l'image de fond :", cleanedImageUrl);
+
+    const h4Content =
+      e.target.parentElement.parentElement.querySelector("h4").textContent;
+    console.log("Contenu de la balise <h4> :", h4Content);
+
+    savedRecipes.push({
+      image: cleanedImageUrl,
+      title: h4Content,
+      id: imgId,
+    });
+    console.log(savedRecipes);
+    printSavedRecipes(savedRecipes);
+  }
+});*/
 wrapper.addEventListener("click", (e) => {
-  if (e.target.classList.contains("fa-heart")) {
+  if (e.target.id === "multi") {
+    window.scrollTo(0, 0);
     const imageDiv = e.target.parentElement.parentElement;
 
     const divId = imageDiv.id;
@@ -356,6 +384,32 @@ wrapper.addEventListener("click", (e) => {
       title: h3Content,
       id: divId,
     });
+    console.log(savedRecipes);
+    printSavedRecipes(savedRecipes);
+  } else if (e.target.id === "single") {
+    window.scrollTo(0, 0);
+
+    const img = e.target.parentElement.parentElement.querySelector("img");
+
+    const imgId = e.target.parentElement.parentElement.id;
+    console.log("l'id de la div:", imgId);
+
+    const imageUrl = img.getAttribute("src");
+    console.log("contenu de src= :", imageUrl);
+    //const cleanedImageUrl = imageUrl.slice(5, -2);
+    //console.log("URL de l'image de fond :", cleanedImageUrl);
+
+    const h4Content = e.target
+      .closest(".recipe_result")
+      .querySelector("h4").textContent;
+    console.log("Contenu de la balise <h4> :", h4Content);
+
+    savedRecipes.push({
+      image: imageUrl,
+      title: h4Content,
+      id: imgId,
+    });
+    console.log("La deuxième méthode");
     console.log(savedRecipes);
     printSavedRecipes(savedRecipes);
   }
