@@ -194,7 +194,7 @@ document.addEventListener("click", async function (e) {
       const data = JSON.parse(result);
       console.log(data);
 
-      wrapper.innerHTML += `<div class="previous" style="cursor:pointer">< Back</div><h4><a href="${data.sourceUrl}">${data.title}</a></h4>`;
+      wrapper.innerHTML += `<div class="previous" style="cursor:pointer">< Back</div><h4><a href="${data.sourceUrl}" target=”_blank”>${data.title}</a></h4>`;
       // Ajoute une classe parente qui contiendra la div image et la div recipe
       const parentDiv = document.createElement("div");
       parentDiv.className = "image-ingredients";
