@@ -379,16 +379,22 @@ wrapper.addEventListener("click", (e) => {
     const h3Content = imageDiv.querySelector("h3").textContent;
     console.log("Contenu de la balise <h3> :", h3Content);
 
-    savedRecipes.push({
+    const newElement = {
       image: cleanedImageUrl,
       title: h3Content,
       id: divId,
-    });
-    console.log(savedRecipes);
-    printSavedRecipes(savedRecipes);
-  } else if (e.target.id === "single") {
-    window.scrollTo(0, 0);
+    };
 
+    const existantElement = savedRecipes.find(
+      (objet) => objet.id === newElement.id
+    );
+
+    if (!existantElement || savedRecipes.length === 0) {
+      savedRecipes.push(newElement);
+      window.scrollTo(0, 0);
+      printSavedRecipes(savedRecipes);
+    }
+  } else if (e.target.id === "single") {
     const img = e.target.parentElement.parentElement.querySelector("img");
 
     const imgId = e.target.parentElement.parentElement.id;
@@ -404,14 +410,21 @@ wrapper.addEventListener("click", (e) => {
       .querySelector("h4").textContent;
     console.log("Contenu de la balise <h4> :", h4Content);
 
-    savedRecipes.push({
+    const newElement = {
       image: imageUrl,
       title: h4Content,
       id: imgId,
-    });
-    console.log("La deuxième méthode");
-    console.log(savedRecipes);
-    printSavedRecipes(savedRecipes);
+    };
+
+    const existantElement = savedRecipes.find(
+      (objet) => objet.id === newElement.id
+    );
+
+    if (!existantElement || savedRecipes.length === 0) {
+      savedRecipes.push(newElement);
+      window.scrollTo(0, 0);
+      printSavedRecipes(savedRecipes);
+    }
   }
 });
 
