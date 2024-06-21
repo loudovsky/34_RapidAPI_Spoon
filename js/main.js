@@ -10,7 +10,7 @@ const saved_recipes = document.querySelector(".saved_recipes");
 const single_image = document.querySelector(".single-image");
 
 let xValues = ["protein", "fat", "carbohydrates"];
-let yValues = [20, 30, 50];
+let yValues = [];
 let barColors = ["orange", "green", "blue"];
 
 // =============== My tabs ==================
@@ -328,41 +328,52 @@ document.addEventListener("click", async function (e) {
 
       parentDiv.appendChild(ingredientsInstructionsDiv);
 
+      const myChartCanvas = document.createElement("canvas");
+      myChartCanvas.id = "myChart";
+
+      const qtyProtein = parseFloat(
+        data.nutrition.caloricBreakdown.percentProtein
+      );
+      const qtyFat = parseFloat(data.nutrition.caloricBreakdown.percentFat);
+      const qtyCarbs = parseFloat(data.nutrition.caloricBreakdown.percentCarbs);
+
+      yValues = [qtyProtein, qtyFat, qtyCarbs];
+
+      const myChartBox = document.createElement("div");
+      myChartBox.className = "chart-box";
+      myChartBox.appendChild(myChartCanvas);
+
       // Ajoute la div parente au conteneur principal (wrapper)
       wrapper.appendChild(parentDiv);
       wrapper.appendChild(instruction);
       wrapper.appendChild(nutritionFacts);
+      wrapper.appendChild(myChartBox);
     } catch (error) {
       console.error(error);
     }
+    const ctx = document.getElementById("myChart");
+
+    new Chart(ctx, {
+      type: "doughnut",
+      data: {
+        labels: ["Protein", "Fat", "Carbohydrates"],
+        datasets: [
+          {
+            label: "percentage",
+            data: yValues,
+            backgroundColor: [
+              "rgb(255, 99, 132)",
+              "rgb(255, 205, 86)",
+              "rgb(54, 162, 235)",
+            ],
+            hoverOffset: 10,
+          },
+        ],
+      },
+    });
   }
 });
 
-/*single_image.addEventListener.addEventListener("click", (e) => {
-  if (e.target.id ==="single") {
-    window.scrollTo(0, 0);
-
-    const img = e.target.parentElement.querySelector("img");
-
-    const imgId = img.id;
-
-    const backgroundImageUrl = window.getComputedStyle(img).backgroundImage;
-    const cleanedImageUrl = backgroundImageUrl.slice(5, -2);
-    console.log("URL de l'image de fond :", cleanedImageUrl);
-
-    const h4Content =
-      e.target.parentElement.parentElement.querySelector("h4").textContent;
-    console.log("Contenu de la balise <h4> :", h4Content);
-
-    savedRecipes.push({
-      image: cleanedImageUrl,
-      title: h4Content,
-      id: imgId,
-    });
-    console.log(savedRecipes);
-    printSavedRecipes(savedRecipes);
-  }
-});*/
 wrapper.addEventListener("click", (e) => {
   if (e.target.id === "multi") {
     window.scrollTo(0, 0);
@@ -436,35 +447,3 @@ second_stage.addEventListener("click", function (e) {
     deleteIngredient(positionInTab);
   }
 });
-
-/*https://api.spoonacular.com/recipes/complexSearch?apiKey=8565a82cbb824636a7f9b75b960b1233&query=pasta&addRecipeInstructions=true&instructionsRequired=true*/
-
-/*
-
-data.results.forEach(async function (oneResult) {
-      console.log(oneResult.id);
-      // On s'assure que la 1ère lettre de chaque titre soit en majuscule
-      const recipeTitle =
-        oneResult.title.charAt(0).toUpperCase() + oneResult.title.slice(1);
-
-      const url = `https://api.spoonacular.com/recipes/${oneResult.id}/information`;
-      const options = {
-        method: "GET",
-        headers: {
-          "x-rapidapi-key":
-            "1a2bd81babmsh83f60e5688664e8p194a55jsn3f4dfe85a532",
-          "x-rapidapi-host":
-            "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-        },
-      };
-      try {
-        const response = await fetch(url, options);
-        const result = await response.text();
-        const data = JSON.parse(result);
-        console.log(`2e data : ${data}`);
-      } catch (error) {
-        console.error(error);
-      }
-    });
-
-*/
