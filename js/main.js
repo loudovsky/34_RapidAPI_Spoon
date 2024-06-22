@@ -8,6 +8,9 @@ const add = document.querySelector("#add_ingredient");
 const second_stage = document.querySelector(".second-stage");
 const saved_recipes = document.querySelector(".saved_recipes");
 const single_image = document.querySelector(".single-image");
+const searchButton = document.querySelector(".search_button");
+const counterDiv = document.querySelector(".counter");
+const searchBar = document.querySelector(".search_bar");
 
 let xValues = ["protein", "fat", "carbohydrates"];
 let yValues = [];
@@ -370,13 +373,33 @@ document.addEventListener("click", async function (e) {
           },
         ],
       },
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: "Caloric Breakdown",
+            font: {
+              family: "Itim, cursive",
+            },
+          },
+          legend: {
+            labels: {
+              font: {
+                family: "Itim, cursive",
+              },
+            },
+          },
+        },
+        layout: {
+          autoPadding: true,
+        },
+      },
     });
   }
 });
 
 wrapper.addEventListener("click", (e) => {
   if (e.target.id === "multi") {
-    window.scrollTo(0, 0);
     const imageDiv = e.target.parentElement.parentElement;
 
     const divId = imageDiv.id;
@@ -401,8 +424,8 @@ wrapper.addEventListener("click", (e) => {
     );
 
     if (!existantElement || savedRecipes.length === 0) {
+      saved_recipes.scrollIntoView({ behavior: "smooth" });
       savedRecipes.push(newElement);
-      window.scrollTo(0, 0);
       printSavedRecipes(savedRecipes);
     }
   } else if (e.target.id === "single") {
@@ -432,8 +455,8 @@ wrapper.addEventListener("click", (e) => {
     );
 
     if (!existantElement || savedRecipes.length === 0) {
+      saved_recipes.scrollIntoView({ behavior: "smooth" });
       savedRecipes.push(newElement);
-      window.scrollTo(0, 0);
       printSavedRecipes(savedRecipes);
     }
   }
@@ -446,4 +469,12 @@ second_stage.addEventListener("click", function (e) {
     );
     deleteIngredient(positionInTab);
   }
+});
+
+document.getElementById("menu-toggle").addEventListener("click", function () {
+  document.body.classList.toggle("nav-open");
+  second_stage.classList.toggle("hidden-div");
+  searchButton.classList.toggle("hidden-div");
+  counterDiv.classList.toggle("hidden-div");
+  searchBar.classList.toggle("hidden-div");
 });

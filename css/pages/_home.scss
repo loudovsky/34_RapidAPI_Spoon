@@ -15,10 +15,60 @@ header {
   background-color: #165837;
   display: block;
   align-items: center;
-  .header-wrapper {
-    width: 1000px;
-    margin: 0 auto;
+
+  .burger-container {
+    position: relative;
+    padding: 1.5rem;
   }
+
+  .menu-toggle {
+    position: absolute;
+    right: 1.5rem;
+    top: 49%;
+    transform: translate(0, -50%);
+    height: 26px;
+    width: 29px;
+
+    &,
+    &:hover {
+      color: #000;
+    }
+  }
+
+  .menu-toggle-bar {
+    display: block;
+    position: absolute;
+    top: 50%;
+    margin-top: -1px;
+    right: 0;
+    width: 100%;
+    height: 4px;
+    border-radius: 4px;
+    background-color: #fff;
+    transition: all 0.3s ease;
+
+    &.menu-toggle-bar--top {
+      transform: translate(0, -8px);
+    }
+    &.menu-toggle-bar--middle {
+    }
+    &.menu-toggle-bar--bottom {
+      transform: translate(0, 8px);
+    }
+
+    .nav-open & {
+      &.menu-toggle-bar--top {
+        transform: translate(0, 0) rotate(45deg);
+      }
+      &.menu-toggle-bar--middle {
+        opacity: 0;
+      }
+      &.menu-toggle-bar--bottom {
+        transform: translate(0, 0) rotate(-45deg);
+      }
+    }
+  }
+
   .first-stage {
     display: inline-block;
     text-align: center;
@@ -526,6 +576,64 @@ footer {
   opacity: 0.75;
 }
 
+@media screen and (max-width: 580px) {
+  h1 {
+    font-size: 40px;
+  }
+  .search_bar {
+    width: 350px;
+  }
+  .wrapper .image {
+    width: 400px;
+    height: 400px;
+    @include transition;
+  }
+  .wrapper .image:hover {
+    width: 405px;
+    height: 405px;
+  }
+}
+@media screen and (min-width: 900px) {
+  .header-wrapper {
+    width: 1000px;
+    margin: 0 auto;
+  }
+  .burger-container {
+    display: none;
+  }
+}
+@media screen and (max-width: 900px) {
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+  }
+  .header-wrapper {
+    text-align: center;
+    width: 100%;
+    margin: 0;
+  }
+  .second-stage.hidden-div,
+  .counter.hidden-div,
+  .search_button.hidden-div,
+  .search_bar.hidden-div {
+    display: none;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .saved .saved_recipes .image i {
+    z-index: 2;
+    position: absolute;
+    top: -10px;
+    left: -10px;
+  }
+}
 @media screen and (max-width: 991px) {
   #button {
     font-size: 15px;
