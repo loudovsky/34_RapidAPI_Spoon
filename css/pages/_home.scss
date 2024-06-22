@@ -73,9 +73,7 @@ header {
     text-align: center;
     width: 100%;
   }
-  .first-stage img {
-    height: 100px;
-  }
+
   .first-stage-bis {
     display: flex;
     justify-content: center;
@@ -132,7 +130,7 @@ h1 {
   color: #000;
   font-size: 50px;
   font-weight: normal;
-  margin: 175px 0 0 0;
+  margin: 220px 0 0 0;
 }
 
 form {
@@ -617,8 +615,17 @@ footer {
   .burger-container {
     display: none;
   }
+  .first-stage img {
+    height: 100px;
+  }
 }
 @media screen and (max-width: 900px) {
+  .first-stage img {
+    height: 125px;
+  }
+  h1 {
+    margin: 190px 0 0 0;
+  }
   form {
     display: flex;
     flex-direction: column;
