@@ -1,7 +1,8 @@
 // =============== My var ==================
 
 const query = document.querySelector("#gifToSearch");
-const nbr = document.querySelector("select");
+const nbr = document.querySelector("#nbr");
+const intolerance = document.querySelector("#intolerance");
 const wrapper = document.querySelector(".recipe_result");
 const button = document.querySelector("#button");
 const add = document.querySelector("#add_ingredient");
@@ -10,6 +11,7 @@ const saved_recipes = document.querySelector(".saved_recipes");
 const single_image = document.querySelector(".single-image");
 const searchButton = document.querySelector(".search_button");
 const counterDiv = document.querySelector(".counter");
+const intoleranceDiv = document.querySelector(".intolerance");
 const searchBar = document.querySelector(".search_bar");
 
 // =============== My tabs ==================
@@ -88,7 +90,7 @@ async function generate() {
     number = nbr.value;
   }
 
-  const url = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch?includeIngredients=${parsedIngredients}&addRecipeInstructions=true&instructionsRequired=true&number=${number}`;
+  const url = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch?includeIngredients=${parsedIngredients}&addRecipeInstructions=true&instructionsRequired=true&number=${number}&intolerances=${intolerance.value}`;
   const options = {
     method: "GET",
     headers: {
@@ -487,6 +489,7 @@ document.getElementById("menu-toggle").addEventListener("click", function () {
   second_stage.classList.toggle("hidden-div");
   searchButton.classList.toggle("hidden-div");
   counterDiv.classList.toggle("hidden-div");
+  intoleranceDiv.classList.toggle("hidden-div");
   searchBar.classList.toggle("hidden-div");
 });
 
@@ -495,4 +498,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const savedRecipesString = localStorage.getItem("mySavedRecipes");
   savedRecipes = JSON.parse(savedRecipesString);
   printSavedRecipes(savedRecipes);
+});
+
+//adaptation de la margin top du <body> en fonction taille du <header>
+document.addEventListener("DOMContentLoaded", function () {
+  const header = document.querySelector(".mon-header");
+  const headerHeight = header.offsetHeight;
+  document.documentElement.style.setProperty(
+    "--header-height",
+    `${headerHeight}px`
+  );
 });

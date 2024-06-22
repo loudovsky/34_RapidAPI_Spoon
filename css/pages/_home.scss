@@ -5,6 +5,7 @@ html {
 
 body {
   background: rgba(35, 35, 35, 0.145);
+  margin-top: var(--header-height);
 }
 
 header {
@@ -50,8 +51,6 @@ header {
     &.menu-toggle-bar--top {
       transform: translate(0, -8px);
     }
-    &.menu-toggle-bar--middle {
-    }
     &.menu-toggle-bar--bottom {
       transform: translate(0, 8px);
     }
@@ -72,9 +71,24 @@ header {
   .first-stage {
     display: inline-block;
     text-align: center;
+    width: 100%;
   }
   .first-stage img {
     height: 100px;
+  }
+  .first-stage-bis {
+    display: flex;
+    justify-content: center;
+    p {
+      color: #fff;
+    }
+    gap: 15px;
+  }
+
+  .first-stage-bis > div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
   .second-stage {
@@ -101,6 +115,8 @@ header {
 
 :root {
   --animate-delay: 2s;
+
+  --header-height: 3em;
 }
 .container {
   width: 80vw;
@@ -618,7 +634,8 @@ footer {
   .second-stage.hidden-div,
   .counter.hidden-div,
   .search_button.hidden-div,
-  .search_bar.hidden-div {
+  .search_bar.hidden-div,
+  .intolerance.hidden-div {
     display: none;
   }
 

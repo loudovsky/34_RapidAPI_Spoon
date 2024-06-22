@@ -12,7 +12,7 @@
     ></script>
   </head>
   <body>
-    <header>
+    <header class="mon-header">
       <div class="burger-container">
         <a id="menu-toggle" class="menu-toggle">
           <span class="menu-toggle-bar menu-toggle-bar--top"></span>
@@ -36,8 +36,10 @@
             <div class="search_button hidden-div">
               <div id="button">Find recipes</div>
             </div>
+          </form>
+          <div class="first-stage-bis">
             <div class="counter hidden-div">
-              <select name="" id="">
+              <select name="" id="nbr">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -51,7 +53,23 @@
               </select>
               <p>recipe(s)</p>
             </div>
-          </form>
+            <div class="intolerance hidden-div">
+              <select name="" id="intolerance">
+                <option value="">none</option>
+                <option value="dairy">dairy</option>
+                <option value="egg">egg</option>
+                <option value="gluten">gluten</option>
+                <option value="grain">grain</option>
+                <option value="peanut">peanut</option>
+                <option value="seafood">seafood</option>
+                <option value="shellfish">shellfish</option>
+                <option value="sesame">sesame</option>
+                <option value="soy">soy</option>
+                <option value="sulfite">sulfite</option>
+              </select>
+              <p>intolerance</p>
+            </div>
+          </div>
         </div>
         <div class="second-stage hidden-div"></div>
       </section>
