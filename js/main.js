@@ -12,14 +12,11 @@ const searchButton = document.querySelector(".search_button");
 const counterDiv = document.querySelector(".counter");
 const searchBar = document.querySelector(".search_bar");
 
-let xValues = ["protein", "fat", "carbohydrates"];
-let yValues = [];
-let barColors = ["orange", "green", "blue"];
-
 // =============== My tabs ==================
 
 let ingredients = [];
 let savedRecipes = [];
+let yValues = [];
 
 //============== Functions =================
 
@@ -72,6 +69,10 @@ function printSavedRecipes(tab) {
 function deleteSavedRecipe(lineToKill, tab) {
   tab.splice(lineToKill, 1);
   printSavedRecipes(tab);
+
+  //sauver tableau dans localStorage
+  const recipesString = JSON.stringify(tab);
+  localStorage.setItem("mySavedRecipes", recipesString);
 }
 
 async function generate() {
@@ -426,6 +427,11 @@ wrapper.addEventListener("click", (e) => {
     if (!existantElement || savedRecipes.length === 0) {
       saved_recipes.scrollIntoView({ behavior: "smooth" });
       savedRecipes.push(newElement);
+
+      //sauvegarde dans localStorage
+      const recipesString = JSON.stringify(savedRecipes);
+      localStorage.setItem("mySavedRecipes", recipesString);
+
       printSavedRecipes(savedRecipes);
     }
   } else if (e.target.id === "single") {
@@ -457,6 +463,11 @@ wrapper.addEventListener("click", (e) => {
     if (!existantElement || savedRecipes.length === 0) {
       saved_recipes.scrollIntoView({ behavior: "smooth" });
       savedRecipes.push(newElement);
+
+      //sauvegarde dans localStorage
+      const recipesString = JSON.stringify(savedRecipes);
+      localStorage.setItem("mySavedRecipes", recipesString);
+
       printSavedRecipes(savedRecipes);
     }
   }
@@ -477,4 +488,11 @@ document.getElementById("menu-toggle").addEventListener("click", function () {
   searchButton.classList.toggle("hidden-div");
   counterDiv.classList.toggle("hidden-div");
   searchBar.classList.toggle("hidden-div");
+});
+
+// à la recharge de la page, extraire contenu de 'myRecipes' sauver dans le 'localStorage'
+document.addEventListener("DOMContentLoaded", () => {
+  const savedRecipesString = localStorage.getItem("mySavedRecipes");
+  savedRecipes = JSON.parse(savedRecipesString);
+  printSavedRecipes(savedRecipes);
 });
