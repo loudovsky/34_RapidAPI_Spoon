@@ -250,6 +250,14 @@ document.addEventListener("click", async function (e) {
         // Ajoutez cet élément au DOM (par exemple, à un conteneur avec un ID spécifique)
         labelDiv.appendChild(veganLabel);
       }
+      if (data.vegetarian === true) {
+        // Créez un élément d'étiquette (par exemple, une balise <span>) pour "gluten free"
+        const vegetarianLabel = document.createElement("span");
+        vegetarianLabel.className = "label vegetarian";
+        vegetarianLabel.textContent = "vegetarian";
+        // Ajoutez cet élément au DOM (par exemple, à un conteneur avec un ID spécifique)
+        labelDiv.appendChild(vegetarianLabel);
+      }
 
       // En considérant que les ingrédients sont stockés dans un tableau d'objets dans la section 'extendedIngredients'
       data.extendedIngredients.forEach(function (oneIngredient) {
@@ -269,9 +277,23 @@ document.addEventListener("click", async function (e) {
         ingredientsDiv.appendChild(ingredientElement);
       });
 
+      let time = 0;
+      if (data.readyInMinutes < 60) {
+        time = `${data.readyInMinutes} min`;
+      } else if (data.readyInMinutes < 240) {
+        totalMinutes = data.readyInMinutes;
+        const hours = Math.floor(totalMinutes / 60);
+        const minutes = totalMinutes % 60;
+        time = `${hours}h${minutes}`;
+      } else {
+        totalMinutes = data.readyInMinutes;
+        const hours = Math.floor(totalMinutes / 60);
+        time = `${hours}h`;
+      }
+
       const instruction = document.createElement("details");
       instruction.className = "instruction-block";
-      instruction.innerHTML = `<summary>Recipe</summary>`;
+      instruction.innerHTML = `<summary>Method<span> ready in ${time}</span></summary>`;
       instruction.setAttribute("open", "false");
 
       // Crée une div pour les instructions. On l'inclut dans instruction

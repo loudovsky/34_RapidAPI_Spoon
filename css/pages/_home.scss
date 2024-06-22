@@ -390,7 +390,8 @@ form {
     }
     .gluten:before,
     .dairy:before,
-    .vegan:before {
+    .vegan:before,
+    .vegetarian:before {
       content: "";
       position: absolute;
       top: 0;
@@ -408,6 +409,9 @@ form {
     }
     .vegan:before {
       border-color: transparent #0fe113 transparent transparent;
+    }
+    .vegetarian:before {
+      border-color: transparent #118613 transparent transparent;
     }
 
     .label:after {
@@ -432,6 +436,9 @@ form {
     }
     .vegan {
       background-color: #0fe113;
+    }
+    .vegetarian {
+      background-color: #118613;
     }
     h4 {
       margin-bottom: 10px;
@@ -477,6 +484,10 @@ form {
 
   summary {
     font-size: 25px;
+    span {
+      font-size: 14px;
+      font-style: italic;
+    }
   }
   .nutrition-facts {
     display: flex;
