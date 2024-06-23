@@ -382,6 +382,16 @@ form {
     color: #000;
   }
 
+  .nutri-score {
+    width: 5Opx;
+    height: 20px;
+    img {
+      width: 50px;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+
   summary {
     font-size: 25px;
     span {

@@ -221,6 +221,28 @@ document.addEventListener("click", async function (e) {
       labelDiv.className = "label-div";
       ingredientsDiv.appendChild(labelDiv);
 
+      // Crée une sous-div pour le Nutriscore
+      const nutriscoreDiv = document.createElement("div");
+      nutriscoreDiv.className = "nutri-score";
+      const nutriScore = parseInt(
+        data.nutrition.properties.find(
+          (element) => element.name === "Nutrition Score"
+        ).amount
+      );
+      console.log("le nutriscore %", nutriScore);
+      if (nutriScore < 20) {
+        nutriscoreDiv.innerHTML = `<img src="./img/nutri_a.png" alt="nutri_a" />`;
+      } else if (nutriScore < 40) {
+        nutriscoreDiv.innerHTML = `<img src="./img/nutri_b.png" alt="nutri_b" />`;
+      } else if (nutriScore < 60) {
+        nutriscoreDiv.innerHTML = `<img src="./img/nutri_c.png" alt="nutri_c" />`;
+      } else if (nutriScore < 80) {
+        nutriscoreDiv.innerHTML = `<img src="./img/nutri_d.png" alt="nutri_d" />`;
+      } else if (nutriScore < 101) {
+        nutriscoreDiv.innerHTML = `<img src="./img/nutri_e.png" alt="nutri_e" />`;
+      }
+      ingredientsDiv.appendChild(nutriscoreDiv);
+
       // Crée titre
       const ingredientTitle = document.createElement("h4");
       ingredientTitle.textContent = "Ingredients";
