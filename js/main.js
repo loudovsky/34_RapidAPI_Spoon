@@ -13,6 +13,7 @@ const searchButton = document.querySelector(".search_button");
 const counterDiv = document.querySelector(".counter");
 const intoleranceDiv = document.querySelector(".intolerance");
 const searchBar = document.querySelector(".search_bar");
+const wrapperDiv = document.querySelector(".wrapper");
 
 // =============== My tabs ==================
 
@@ -183,7 +184,7 @@ saved_recipes.addEventListener("click", function (e) {
 document.addEventListener("click", async function (e) {
   if (e.target.classList.contains("title")) {
     wrapper.innerHTML = "";
-    window.scrollTo(0, 0);
+    wrapperDiv.scrollIntoView({ behavior: "smooth" });
     const idFromA = e.target.id;
     const url = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${idFromA}/information?includeNutrition=true`;
     const options = {
@@ -293,7 +294,7 @@ document.addEventListener("click", async function (e) {
 
       const instruction = document.createElement("details");
       instruction.className = "instruction-block";
-      instruction.innerHTML = `<summary>Method<span> ready in ${time}</span></summary>`;
+      instruction.innerHTML = `<summary>Instruction <span><i class="fa-regular fa-clock"></i> ready in ${time} </span></summary>`;
       instruction.setAttribute("open", "false");
 
       // Crée une div pour les instructions. On l'inclut dans instruction

@@ -1,0 +1,40 @@
+footer {
+  width: 100%;
+
+  .top {
+    background-color: #1658377d;
+    height: 100px;
+    width: 100%;
+  }
+  .bottom {
+    background-color: #f0f4ef;
+    height: 350px;
+    width: 100%;
+    padding-left: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .bottom-image {
+      padding: 5px;
+    }
+    .bottom-image img {
+      width: 150px;
+    }
+    p {
+      padding: 10px;
+      font-weight: 300;
+      max-width: 400px;
+      color: #0000005b;
+    }
+  }
+  .sub-bottom {
+    background-color: #f0f4ef;
+    p {
+      padding: 20px 0 25px 0;
+      margin: 0;
+      text-align: center;
+    }
+  }
+}
