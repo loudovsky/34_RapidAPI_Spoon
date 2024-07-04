@@ -114,7 +114,7 @@ async function generate() {
       const recipeTitle =
         oneResult.title.charAt(0).toUpperCase() + oneResult.title.slice(1);
       console.log(recipeTitle);
-      wrapper.innerHTML += `<div class='image title' id=${oneResult.id} data-aos="fade-up-left" style="background: url(${oneResult.image}) center/cover" onerror="this.style.backgroundImage = 'url(../img/pexels-karolina-grabowska-4033639.jpg)'"><h3 data-aos="fade-left" class="title" id=${oneResult.id}>${recipeTitle}</h3><div class="heart"><i class="fa-regular fa-heart" id="multi"></i></div></div>`;
+      wrapper.innerHTML += `<div class='image title' id=${oneResult.id} data-aos="fade-up-left" style="background: url('https://img.spoonacular.com/recipes/${oneResult.id}-636x393.jpg') center/cover" onerror="this.style.backgroundImage = 'url(../img/pexels-karolina-grabowska-4033639.jpg)'"><h3 data-aos="fade-left" class="title" id=${oneResult.id}>${recipeTitle}</h3><div class="heart"><i class="fa-regular fa-heart" id="multi"></i></div></div>`;
     });
     /*const url = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/${oneResult.id}/information?includeNutrition=true`;
       const options = {
@@ -210,7 +210,7 @@ document.addEventListener("click", async function (e) {
       const imageDiv = document.createElement("div");
       imageDiv.className = "single-image";
       imageDiv.id = data.id;
-      imageDiv.innerHTML = `<img src="${data.image}" onerror="this.src='../img/pexels-karolina-grabowska-4033639.jpg'" alt="photo recette"><div class="heart" style="cursor:pointer"><i class="fa-regular fa-heart" id="single"></i></div>`;
+      imageDiv.innerHTML = `<img src="https://img.spoonacular.com/recipes/${data.id}-636x393.jpg" onerror="this.src='../img/pexels-karolina-grabowska-4033639.jpg'" alt="photo recette"><div class="heart" style="cursor:pointer"><i class="fa-regular fa-heart" id="single"></i></div>`;
 
       // Crée une div pour les ingrédients
       const ingredientsDiv = document.createElement("ul");
@@ -220,7 +220,6 @@ document.addEventListener("click", async function (e) {
       const labelDiv = document.createElement("div");
       labelDiv.className = "label-div";
       ingredientsDiv.appendChild(labelDiv);
-
       // Crée une sous-div pour le Nutriscore
       const nutriscoreDiv = document.createElement("div");
       nutriscoreDiv.className = "nutri-score";
@@ -230,23 +229,28 @@ document.addEventListener("click", async function (e) {
         ).amount
       );
       console.log("le nutriscore %", nutriScore);
-      if (nutriScore < 20) {
-        nutriscoreDiv.innerHTML = `<img src="./img/nutri_a.png" alt="nutri_a" />`;
-      } else if (nutriScore < 40) {
-        nutriscoreDiv.innerHTML = `<img src="./img/nutri_b.png" alt="nutri_b" />`;
-      } else if (nutriScore < 60) {
-        nutriscoreDiv.innerHTML = `<img src="./img/nutri_c.png" alt="nutri_c" />`;
-      } else if (nutriScore < 80) {
-        nutriscoreDiv.innerHTML = `<img src="./img/nutri_d.png" alt="nutri_d" />`;
-      } else if (nutriScore < 101) {
-        nutriscoreDiv.innerHTML = `<img src="./img/nutri_e.png" alt="nutri_e" />`;
+      switch (true) {
+        case nutriScore < 20:
+          nutriscoreDiv.innerHTML = `<img src="./img/nutri_a.png" alt="nutri_a" />`;
+          break;
+        case nutriScore < 40:
+          nutriscoreDiv.innerHTML = `<img src="./img/nutri_b.png" alt="nutri_b" />`;
+          break;
+        case nutriScore < 60:
+          nutriscoreDiv.innerHTML = `<img src="./img/nutri_c.png" alt="nutri_c" />`;
+          break;
+        case nutriScore < 80:
+          nutriscoreDiv.innerHTML = `<img src="./img/nutri_d.png" alt="nutri_d" />`;
+          break;
+        case nutriScore < 101:
+          nutriscoreDiv.innerHTML = `<img src="./img/nutri_e.png" alt="nutri_e" />`;
+          break;
+        default:
+          // Gérer le cas où nutriScore est en dehors de la plage attendue
+          break;
       }
-      ingredientsDiv.appendChild(nutriscoreDiv);
 
-      // Crée titre
-      const ingredientTitle = document.createElement("h4");
-      ingredientTitle.textContent = "Ingredients";
-      ingredientsDiv.appendChild(ingredientTitle);
+      ingredientsDiv.appendChild(nutriscoreDiv);
 
       // Pour afficher les étiquettes "gluten free", "dairy free"
       if (data.diets.includes("gluten free")) {
@@ -281,6 +285,11 @@ document.addEventListener("click", async function (e) {
         // Ajoutez cet élément au DOM (par exemple, à un conteneur avec un ID spécifique)
         labelDiv.appendChild(vegetarianLabel);
       }
+
+      // Crée titre
+      const ingredientTitle = document.createElement("h4");
+      ingredientTitle.textContent = "Ingredients";
+      ingredientsDiv.appendChild(ingredientTitle);
 
       // En considérant que les ingrédients sont stockés dans un tableau d'objets dans la section 'extendedIngredients'
       data.extendedIngredients.forEach(function (oneIngredient) {
